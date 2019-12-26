@@ -1,0 +1,26 @@
+<%- include('../includes/start.ejs') %>
+<%- include('../includes/header.ejs') %>
+
+    <h1>Orders</h1>
+    <%if(orders.length > 0) {%>
+        <div class="row">
+            <ul class="list-group">
+                <%orders.forEach(order => {%>
+                    <li class="list-group-item">
+                        <h3>Order# - <%=order._id%></h3>
+                        <ul class="list-group">
+                            <%order.products.forEach(orderItem => {%>
+                                <li class="list-group-item">
+                                    <%=orderItem.product.productName%>(<%=orderItem.quantity%>)
+                                </li>
+                            <%})%>
+                        </ul>
+                    </li>
+                <%})%>
+            </ul>
+        </div> 
+    <%} else {%>
+        <h2 class="text-danger">No current orders at this time.</h2>
+    <%}%>
+
+<%- include('../includes/end.ejs') %>

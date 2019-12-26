@@ -1,0 +1,30 @@
+<%- include('../includes/start.ejs') %>
+<%- include('../includes/header.ejs') %>
+
+    
+    <div class="row">
+        <div class="col-6"><h1>Cart</h1></div>
+        <div class="col-6">
+            <form action="/post-order" method="POST">
+                <button type="submit" class="btn btn-success float-right">Order Now</button>
+            </form>
+        </div>
+    </div>
+    <%if(cartProducts.length> 0) {%>
+        <ul class="list-group col-6">
+            <% cartProducts.forEach(cartProd => {%>
+                <li class="list-group-item row">
+                    <p class="col"><%=cartProd.productId.productName%>(<%=cartProd.quantity%>)</p>
+                    <form class="col" action="/cart-delete-product" method="POST">
+                        <input type="hidden" name="cartDeleteProdId" value="<%=cartProd.productId._id%>">
+                        <input type="hidden" name="cartDeleteProdPrice" value="<%=cartProd.productId.productPrice%>">
+                        <button type="submit" class="btn btn-danger float-right">Delete</button>
+                    </form>
+                </li>
+            <%})%>
+        </ul>
+    <%} else {%>
+        <h2 class="text-danger">No Products Added to Cart yet !!</h2>
+    <%}%>
+
+<%- include('../includes/end.ejs') %>

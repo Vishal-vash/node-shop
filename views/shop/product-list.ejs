@@ -1,0 +1,36 @@
+<%- include('../includes/start.ejs') %> <%- include('../includes/header.ejs') %>
+
+<%if (products.length>0) {%>
+  <h1>Products List</h1>
+    <% for(let productSlice of products) { %>
+      <div class="card-deck mb-3">
+      <% for(let prod of productSlice) { %>
+      <div class="card col-4 p-0">
+          <img
+          src="<%= prod.productImgUrl %>"
+          class="card-img-top"
+          alt="..."
+          height="220"
+          />
+          <div class="card-body">
+            <h5 class="card-title"><%= prod.productName %></h5>
+            <h6>Price - $<%= prod.productPrice %></h6>
+            <p class="card-text">
+                <%= prod.productDesc %>
+            </p>
+            <div class="row">
+              <a href="/products/<%= prod._id %>" class="btn btn-primary col-3 mr-1">Details</a>
+              <%if(isAuthenticated){%>
+              <%- include('../includes/add-to-cart.ejs', {product: prod}) %>
+              <% } %>
+            </div>
+          </div>
+      </div>
+      <% } %>
+      </div>
+    <% } %>
+  <% } else {%>
+  <h1 class="text-danger">No Products Available</h1>
+  <% }%> 
+
+  <%- include('../includes/end.ejs') %>

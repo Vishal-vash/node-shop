@@ -1,0 +1,7 @@
+.btn-anchor,
+.btn-anchor:focus,
+.btn-anchor:hover {
+    border: none;
+    background: none;
+    outline: none;
+}
