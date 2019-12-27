@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const mongodbStore = require("connect-mongodb-session")(session);
 
-const MONGO_DB_URI = "mongodb+srv://vishal:nokian72@cluster0-mabcy.mongodb.net/shop?retryWrites=true&w=majority";
+const MONGO_DB_URI = "mongodb+srv://vishal:<password>@cluster0-mabcy.mongodb.net/shop?retryWrites=true&w=majority";
 const User = require("./models/user");
 
 const db = mongoose.connect(MONGO_DB_URI);
