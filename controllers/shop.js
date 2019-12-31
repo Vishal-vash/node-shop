@@ -8,8 +8,7 @@ exports.getIndex = (req, res, next) => {
       res.render("shop/index", {
         products: Utility.sortProducts(products),
         docTitle: "Shop Products",
-        path: "shop",
-        isAuthenticated: req.session.isLoggedIn
+        path: "shop"
       });
     })
     .catch(err => console.log(err));
@@ -20,8 +19,7 @@ exports.getProducts = (req, res, next) => {
     res.render("shop/product-list", {
       products: Utility.sortProducts(products),
       docTitle: "Products",
-      path: "products",
-      isAuthenticated: req.session.isLoggedIn
+      path: "products"
     });
   });
 };
@@ -33,8 +31,7 @@ exports.getProduct = (req, res, next) => {
       res.render("shop/product-details", {
         product: product,
         docTitle: "Product Details",
-        path: "products",
-        isAuthenticated: req.session.isLoggedIn
+        path: "products"
       });
     })
     .catch(err => console.log(err));
@@ -48,8 +45,7 @@ exports.getCart = (req, res, next) => {
       res.render("shop/cart", {
         docTitle: "Cart",
         path: "cart",
-        cartProducts: user.cart.items,
-        isAuthenticated: req.session.isLoggedIn
+        cartProducts: user.cart.items
       });
     })
     .catch(err => console.log(err));
@@ -76,7 +72,7 @@ exports.getCheckout = (req, res, next) => {
   res.render("shop/checkout", {
     docTitle: "Checkout",
     path: "checkout",
-    isAuthenticated: req.session.isLoggedIn
+    
   });
 };
 
@@ -86,8 +82,7 @@ exports.getOrders = (req, res, next) => {
       res.render("shop/orders", {
         docTitle: "Orders",
         path: "orders",
-        orders: orders,
-        isAuthenticated: req.session.isLoggedIn
+        orders: orders
       });
     })
     .catch(err => console.log(err));
@@ -106,7 +101,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.name,
+          email: req.user.email,
           userId: req.user
         },
         products: products

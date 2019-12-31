@@ -16,6 +16,7 @@
                 <li class="list-group-item row">
                     <p class="col"><%=cartProd.productId.productName%>(<%=cartProd.quantity%>)</p>
                     <form class="col" action="/cart-delete-product" method="POST">
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>" />
                         <input type="hidden" name="cartDeleteProdId" value="<%=cartProd.productId._id%>">
                         <input type="hidden" name="cartDeleteProdPrice" value="<%=cartProd.productId.productPrice%>">
                         <button type="submit" class="btn btn-danger float-right">Delete</button>

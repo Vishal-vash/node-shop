@@ -1,14 +1,16 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
   email: {
     type: String,
     required: true
   },
+  password: {
+    type: String,
+    required: true
+  },
+  resetToken: String,
+  resetTokenExpiration: Date,
   cart: {
     items: [
       {
@@ -66,52 +68,3 @@ UserSchema.methods.clearCart = function() {
 }
 
 module.exports = mongoose.model("User", UserSchema);
-
-
-
-// class User {
-//   constructor(username, email, userId, cart) {
-//     this.username = username;
-//     this.email = email;
-//     this._id = userId ? new ObjectId(userId) : null;
-//     this.cart = cart;
-//   }
-
-
-//   addOrder() {
-//     const db = getDb();
-//     return this.getCart()
-//       .then(products => {
-//         products.map(val => delete val["userId"]);
-//         const order = {
-//           items: products,
-//           user: {
-//             _id: new ObjectId(this._id),
-//             username: this.username,
-//             email: this.email
-//           }
-//         };
-//         return db.collection("orders").insertOne(order);
-//       })
-//       .then(order => {
-//         this.cart = { items: [] };
-//         return db
-//           .collection("users")
-//           .updateOne(
-//             { _id: new ObjectId(this._id) },
-//             { $set: { cart: { items: [] } } }
-//           );
-//       })
-//       .catch(err => console.log(err));
-//   }
-
-//   getOrders() {
-//     const db = getDb();
-//     return db
-//       .collection("orders")
-//       .find({ 'user._id': new ObjectId(this._id) })
-//       .toArray();
-//   }
-// }
-
-// module.exports = User;

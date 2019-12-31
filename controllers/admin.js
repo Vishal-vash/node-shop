@@ -5,8 +5,7 @@ exports.getAddProduct = (req, res, next) => {
   res.render("admin/add-product", {
     docTitle: "Admin Add Product",
     path: "admin/add-product",
-    editing: false,
-    isAuthenticated: req.session.isLoggedIn
+    editing: false
   });
 };
 
@@ -38,8 +37,7 @@ exports.getEditProduct = (req, res, next) => {
       product: product,
       docTitle: "Admin Edit Product",
       path: "admin/edit-product",
-      editing: editMode == "true" ? true : false,
-      isAuthenticated: req.session.isLoggedIn
+      editing: editMode == "true" ? true : false
     });
   });
 };
@@ -51,24 +49,25 @@ exports.postEditProduct = (req, res, next) => {
   const prodPrice = req.body.productPrice;
   const prodDesc = req.body.productDesc;
 
-  Product.findById(prodId)
+  Product.findOne({_id: prodId, userId: req.user._id})
     .then(productEdited => {
+      if(!productEdited) {
+        return res.redirect("/admin/products");
+      }
       productEdited.productName = prodName;
       productEdited.productImgUrl = prodImgUrl;
       productEdited.productPrice = prodPrice;
       productEdited.productDesc = prodDesc;
-      productEdited.save();
-    })
-    .then(result => {
-      console.log("Product UPdated !!");
-      res.redirect("/admin/products");
+      productEdited.save().then(result => {
+        res.redirect("/admin/products");
+      })
     })
     .catch(err => console.log(err));
 };
 
 exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.delProdId;
-  Product.findByIdAndRemove(prodId)
+  Product.deleteOne({_id: prodId, userId: req.user._id})
     .then(result => {
       res.redirect("/admin/products");
     })
@@ -78,12 +77,11 @@ exports.postDeleteProduct = (req, res, next) => {
 };
 
 exports.getAdminProducts = (req, res, next) => {
-  Product.find().then(products => {
+  Product.find({userId: req.user._id}).then(products => {
     res.render("admin/products", {
       products: Utility.sortProducts(products),
       docTitle: "Admin Products",
-      path: "admin/products",
-      isAuthenticated: req.session.isLoggedIn
+      path: "admin/products"
     });
   });
 };
