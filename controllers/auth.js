@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport(
   sendTransport({
     auth: {
       api_key:
-        "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"
+        "<ADD_YOUR_API_KEY>"
     }
   })
 );
